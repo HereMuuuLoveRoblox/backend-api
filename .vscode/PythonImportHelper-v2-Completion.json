@@ -1,0 +1,341 @@
+[
+    {
+        "label": "mysql.connector",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mysql.connector",
+        "description": "mysql.connector",
+        "detail": "mysql.connector",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "jwt",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "JWTError",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "jwt",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "bcrypt",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "bcrypt",
+        "description": "bcrypt",
+        "detail": "bcrypt",
+        "documentation": {}
+    },
+    {
+        "label": "token",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "connect",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "users",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "token",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ConnectDB",
+        "kind": 2,
+        "importPath": "database.connect",
+        "description": "database.connect",
+        "peekOfCode": "def ConnectDB():\n    try:\n        connection = mysql.connector.connect(\n            host=os.getenv(\"DB_HOST\"),\n            user=os.getenv(\"DB_USER\"),\n            password=os.getenv(\"DB_PASSWORD\"),\n            database=os.getenv(\"DB_NAME\")\n        )\n        print(\"Connect DB success\")\n        return connection",
+        "detail": "database.connect",
+        "documentation": {}
+    },
+    {
+        "label": "create_access_token",
+        "kind": 2,
+        "importPath": "database.token",
+        "description": "database.token",
+        "peekOfCode": "def create_access_token(data: dict):\n    to_encode = data.copy()\n    # ✅ แปลง ENV เป็น int\n    expire = datetime.utcnow() + timedelta(\n        minutes=int(ACCESS_TOKEN_EXPIRE_MINUTES)\n    )\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(\n        to_encode,\n        SECRET_KEY,",
+        "detail": "database.token",
+        "documentation": {}
+    },
+    {
+        "label": "verify_token",
+        "kind": 2,
+        "importPath": "database.token",
+        "description": "database.token",
+        "peekOfCode": "def verify_token(request: Request):\n    auth_header = request.headers.get(\"Authorization\")\n    if not auth_header or not auth_header.startswith(\"Bearer \"):\n        raise HTTPException(\n            status_code=status.HTTP_401_UNAUTHORIZED,\n            detail=\"Missing or invalid token\"\n        )\n    token = auth_header.split(\" \")[1]\n    try:\n        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])",
+        "detail": "database.token",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "database.token",
+        "description": "database.token",
+        "peekOfCode": "SECRET_KEY = os.getenv(\"SECRET_KEY\")\nALGORITHM = os.getenv(\"ALGORITHM\")\nACCESS_TOKEN_EXPIRE_MINUTES = os.getenv(\"ACCESS_TOKEN_EXPIRE_MINUTES\")\ndef create_access_token(data: dict):\n    to_encode = data.copy()\n    # ✅ แปลง ENV เป็น int\n    expire = datetime.utcnow() + timedelta(\n        minutes=int(ACCESS_TOKEN_EXPIRE_MINUTES)\n    )\n    to_encode.update({\"exp\": expire})",
+        "detail": "database.token",
+        "documentation": {}
+    },
+    {
+        "label": "ALGORITHM",
+        "kind": 5,
+        "importPath": "database.token",
+        "description": "database.token",
+        "peekOfCode": "ALGORITHM = os.getenv(\"ALGORITHM\")\nACCESS_TOKEN_EXPIRE_MINUTES = os.getenv(\"ACCESS_TOKEN_EXPIRE_MINUTES\")\ndef create_access_token(data: dict):\n    to_encode = data.copy()\n    # ✅ แปลง ENV เป็น int\n    expire = datetime.utcnow() + timedelta(\n        minutes=int(ACCESS_TOKEN_EXPIRE_MINUTES)\n    )\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(",
+        "detail": "database.token",
+        "documentation": {}
+    },
+    {
+        "label": "ACCESS_TOKEN_EXPIRE_MINUTES",
+        "kind": 5,
+        "importPath": "database.token",
+        "description": "database.token",
+        "peekOfCode": "ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv(\"ACCESS_TOKEN_EXPIRE_MINUTES\")\ndef create_access_token(data: dict):\n    to_encode = data.copy()\n    # ✅ แปลง ENV เป็น int\n    expire = datetime.utcnow() + timedelta(\n        minutes=int(ACCESS_TOKEN_EXPIRE_MINUTES)\n    )\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(\n        to_encode,",
+        "detail": "database.token",
+        "documentation": {}
+    },
+    {
+        "label": "userRegister",
+        "kind": 2,
+        "importPath": "database.users",
+        "description": "database.users",
+        "peekOfCode": "def userRegister(conn, data):\n    try:\n        # Check Password is Match\n        if data.password != data.confirmPassword:\n            return {\"status\": \"error\", \"message\": \"Passwords do not match\"}\n        # Username least 8 characters\n        if len(data.userName) < 8:\n            return {\"status\": \"error\", \"message\": \"Username must be at least 8 characters long\"}\n        # hash password\n        hashed_password = bcrypt.hashpw(data.password.encode('utf-8'), bcrypt.gensalt())",
+        "detail": "database.users",
+        "documentation": {}
+    },
+    {
+        "label": "userLogin",
+        "kind": 2,
+        "importPath": "database.users",
+        "description": "database.users",
+        "peekOfCode": "def userLogin(conn, data):\n    try:\n        mycursor = conn.cursor(dictionary=True)\n        sql = \"SELECT userId, password, email, role FROM users WHERE email = %s\"\n        mycursor.execute(sql, (data.email,))\n        # เช็คว่ามี Email นี้ อยู่จริง\n        user = mycursor.fetchone()\n        # เช็คว่า ทีอีเมล และ Password ที่กรอก ตรงกับ Password ใน SQL\n        # ก่อนเช็ค ต้อง hash แล้วค่อยเช็ค\n        if user and bcrypt.checkpw(data.password.encode('utf-8'), user['password'].encode('utf-8')):",
+        "detail": "database.users",
+        "documentation": {}
+    },
+    {
+        "label": "getUserByUserID",
+        "kind": 2,
+        "importPath": "database.users",
+        "description": "database.users",
+        "peekOfCode": "def getUserByUserID(conn, userId):\n    try:\n        mycursor = conn.cursor(dictionary=True)\n        mycursor.execute(f'SELECT userName, email, personnelId, role FROM users WHERE userId = {userId}')\n        myresult = mycursor.fetchone()\n        if not myresult:\n            return {\n                \"status\": \"error\",\n                \"message\": f\"User {userId} Dont have In database.\",\n        }",
+        "detail": "database.users",
+        "documentation": {}
+    },
+    {
+        "label": "getUserAll",
+        "kind": 2,
+        "importPath": "database.users",
+        "description": "database.users",
+        "peekOfCode": "def getUserAll(conn):\n    try:\n        mycursor = conn.cursor(dictionary=True)\n        mycursor.execute(f'SELECT userId, userName, email, personnelId, role FROM users')\n        myresult = mycursor.fetchall()\n        if not myresult:\n            return {\n                \"status\": \"error\",\n                \"message\": \"Dont have Users In Database.\",\n        }",
+        "detail": "database.users",
+        "documentation": {}
+    },
+    {
+        "label": "UserRegister",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class UserRegister(BaseModel):\n    userName: str\n    password: str\n    confirmPassword: str\n    email: str\n    personnelId: str\nclass UserLogin(BaseModel):\n    email: str\n    password: str\n# Connect Database",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "UserLogin",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\n# Connect Database\nconn = connect.ConnectDB()\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "conn",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "conn = connect.ConnectDB()\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "origins",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "origins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,\n    allow_methods=[\"*\"],",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n@app.post(\"/users/register\")\nasync def post_user_register(data: UserRegister):",
+        "detail": "main",
+        "documentation": {}
+    }
+]
