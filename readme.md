@@ -80,3 +80,15 @@ Copy
 Edit
 
 pip  install  -r  requirements.txt
+```
+
+## วิธีเปิดโฟลเดอร์โปรเจกต์ใน GitHub Desktop ผ่าน CMD
+```bash
+รันคำสั่งนี้:
+
+D:\projectClassroom\Backend>github .
+
+(github .)
+
+คำสั่งนี้จะเปิด GitHub Desktop พร้อมโหลด repo นี้ให้ทันที
+```
