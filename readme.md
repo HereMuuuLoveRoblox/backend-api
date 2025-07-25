@@ -21,7 +21,7 @@
 
 - ⚡ FastAPI
 
-- 🛢️ MySQL (XAMPP)
+- 🛢️ SQLite
 
 - 🔐 bcrypt (hash password)
 
