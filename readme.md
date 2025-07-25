@@ -51,33 +51,12 @@ cd  your-repo
 
 2.  สร้าง  Virtual  Environment
 
-bash
-
-Copy
-
-Edit
-
 python  -m  venv  venv
-
-# เปิดใช้งาน:
-
-# Windows
 
 venv\Scripts\activate
 
-# macOS/Linux
-
-source  venv/bin/activate
-
-  
 
 3.  ติดตั้ง  dependencies
-
-bash
-
-Copy
-
-Edit
 
 pip  install  -r  requirements.txt
 ```

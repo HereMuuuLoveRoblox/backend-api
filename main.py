@@ -19,7 +19,7 @@ class UserLogin(BaseModel):
     
 
 # Connect Database
-conn = connect.ConnectDB()
+# conn = connect.ConnectDB()
 
 origins = [
     "http://localhost:3000",   # สำหรับ frontend React/Vue dev
@@ -36,7 +36,7 @@ app.add_middleware(
 )
 
 @app.post("/users/register")
-async def post_user_register(data: UserRegister):
+async def post_user_register(data: UserRegister, conn=Depends(connect.get_db)):
     try:
         response = MUsers.userRegister(conn, data)
         return response
@@ -45,7 +45,7 @@ async def post_user_register(data: UserRegister):
         return {"Error": str(e)}
 
 @app.post("/users/login")
-async def post_user_login(data: UserLogin):
+async def post_user_login(data: UserLogin, conn=Depends(connect.get_db)):
     try:
         response = MUsers.userLogin(conn, data)
         return response
@@ -54,7 +54,7 @@ async def post_user_login(data: UserLogin):
         return {"Error": str(e)}
 
 @app.get("/users/getuserall")
-async def get_user_all(user_data: dict = Depends(JWTTOKEN.verify_token)):
+async def get_user_all(user_data: dict = Depends(JWTTOKEN.verify_token), conn=Depends(connect.get_db)):
     
     if user_data['role'] == "user":
         return {"status": "error", "message": "user is not admin"}
@@ -66,7 +66,7 @@ async def get_user_all(user_data: dict = Depends(JWTTOKEN.verify_token)):
         return {"Error": str(e)}
 
 @app.get("/users/getuserId/{userId}")
-async def get_user_by_id(userId: int, user_data: dict = Depends(JWTTOKEN.verify_token)):
+async def get_user_by_id(userId: int, user_data: dict = Depends(JWTTOKEN.verify_token), conn=Depends(connect.get_db)):
     try:
 
         if user_data['role'] == "user":
@@ -78,13 +78,13 @@ async def get_user_by_id(userId: int, user_data: dict = Depends(JWTTOKEN.verify_
     except Exception as e:
         return {"Error": str(e)}
 
-@app.put("/users/update/password/{userId}/{old_password}/{new_password}")
-async def put_change_password(userId: int, password: str,new_password: str, user_data: dict = Depends(JWTTOKEN.verify_token)):
+
+@app.get("/users/getMe")
+async def get_me(user_data: dict = Depends(JWTTOKEN.verify_token), conn=Depends(connect.get_db)):
+    
     try:
-        
-        response = MUsers.updateUserPassword(conn, userId , password, new_password)
+        response = MUsers.getUserByUserID(conn, user_data['userId'])
         return response
     
     except Exception as e:
         return {"Error": str(e)}
-

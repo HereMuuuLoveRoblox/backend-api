@@ -196,11 +196,20 @@
         "documentation": {}
     },
     {
-        "label": "ConnectDB",
+        "label": "TestConnectDB",
         "kind": 2,
         "importPath": "database.connect",
         "description": "database.connect",
-        "peekOfCode": "def ConnectDB():\n    try:\n        db_path = os.getenv(\"DB_PATH\", \"my_database.db\")  # ใช้ default ถ้า .env ไม่มี\n        connection = sqlite3.connect(db_path)\n        connection.row_factory = sqlite3.Row\n        return connection\n    except sqlite3.Error as err:\n        print(f\"Connect DB failed: {err}\")\n        sys.exit(1)\n# Test",
+        "peekOfCode": "def TestConnectDB():\n    try:\n        db_path = os.getenv(\"DB_PATH\", \"my_database.db\")  # ใช้ default ถ้า .env ไม่มี\n        connection = sqlite3.connect(db_path)\n        connection.row_factory = sqlite3.Row\n        return connection\n    except sqlite3.Error as err:\n        print(f\"Connect DB failed: {err}\")\n        sys.exit(1)\ndef get_db():",
+        "detail": "database.connect",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "kind": 2,
+        "importPath": "database.connect",
+        "description": "database.connect",
+        "peekOfCode": "def get_db():\n    db_path = os.getenv(\"DB_PATH\", \"my_database.db\")\n    connection = sqlite3.connect(db_path, check_same_thread=False)  # ✅ เหมือนกัน\n    connection.row_factory = sqlite3.Row\n    try:\n        yield connection\n    finally:\n        connection.close()\n# Test\nif __name__ == \"__main__\":",
         "detail": "database.connect",
         "documentation": {}
     },
@@ -299,16 +308,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\n# Connect Database\nconn = connect.ConnectDB()\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()",
-        "detail": "main",
-        "documentation": {}
-    },
-    {
-        "label": "conn",
-        "kind": 5,
-        "importPath": "main",
-        "description": "main",
-        "peekOfCode": "conn = connect.ConnectDB()\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,",
+        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\n# Connect Database\n# conn = connect.ConnectDB()\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()",
         "detail": "main",
         "documentation": {}
     },
@@ -326,7 +326,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n@app.post(\"/users/register\")\nasync def post_user_register(data: UserRegister):",
+        "peekOfCode": "app = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n@app.post(\"/users/register\")\nasync def post_user_register(data: UserRegister, conn=Depends(connect.get_db)):",
         "detail": "main",
         "documentation": {}
     }
