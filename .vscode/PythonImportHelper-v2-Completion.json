@@ -1,27 +1,11 @@
 [
     {
-        "label": "mysql.connector",
+        "label": "sqlite3",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "mysql.connector",
-        "description": "mysql.connector",
-        "detail": "mysql.connector",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
-        "documentation": {}
-    },
-    {
-        "label": "load_dotenv",
-        "importPath": "dotenv",
-        "description": "dotenv",
-        "isExtraImport": true,
-        "detail": "dotenv",
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
         "documentation": {}
     },
     {
@@ -147,6 +131,14 @@
         "documentation": {}
     },
     {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
         "label": "bcrypt",
         "kind": 6,
         "isExtraImport": true,
@@ -208,7 +200,7 @@
         "kind": 2,
         "importPath": "database.connect",
         "description": "database.connect",
-        "peekOfCode": "def ConnectDB():\n    try:\n        connection = mysql.connector.connect(\n            host=os.getenv(\"DB_HOST\"),\n            user=os.getenv(\"DB_USER\"),\n            password=os.getenv(\"DB_PASSWORD\"),\n            database=os.getenv(\"DB_NAME\")\n        )\n        print(\"Connect DB success\")\n        return connection",
+        "peekOfCode": "def ConnectDB():\n    try:\n        db_path = os.getenv(\"DB_PATH\", \"my_database.db\")  # ใช้ default ถ้า .env ไม่มี\n        connection = sqlite3.connect(db_path)\n        connection.row_factory = sqlite3.Row\n        return connection\n    except sqlite3.Error as err:\n        print(f\"Connect DB failed: {err}\")\n        sys.exit(1)\n# Test",
         "detail": "database.connect",
         "documentation": {}
     },
@@ -271,7 +263,7 @@
         "kind": 2,
         "importPath": "database.users",
         "description": "database.users",
-        "peekOfCode": "def userLogin(conn, data):\n    try:\n        mycursor = conn.cursor(dictionary=True)\n        sql = \"SELECT userId, password, email, role FROM users WHERE email = %s\"\n        mycursor.execute(sql, (data.email,))\n        # เช็คว่ามี Email นี้ อยู่จริง\n        user = mycursor.fetchone()\n        # เช็คว่า ทีอีเมล และ Password ที่กรอก ตรงกับ Password ใน SQL\n        # ก่อนเช็ค ต้อง hash แล้วค่อยเช็ค\n        if user and bcrypt.checkpw(data.password.encode('utf-8'), user['password'].encode('utf-8')):",
+        "peekOfCode": "def userLogin(conn, data):\n    try:\n        mycursor = conn.cursor()\n        sql = \"SELECT userId, password, email, role FROM users WHERE email = ?\"\n        mycursor.execute(sql, (data.email,))\n        # เช็คว่ามี Email นี้ อยู่จริง\n        user = mycursor.fetchone()\n        # เช็คว่า ทีอีเมล และ Password ที่กรอก ตรงกับ Password ใน SQL\n        # ก่อนเช็ค ต้อง hash แล้วค่อยเช็ค\n        if user and bcrypt.checkpw(data.password.encode('utf-8'), user['password']):",
         "detail": "database.users",
         "documentation": {}
     },
@@ -280,7 +272,7 @@
         "kind": 2,
         "importPath": "database.users",
         "description": "database.users",
-        "peekOfCode": "def getUserByUserID(conn, userId):\n    try:\n        mycursor = conn.cursor(dictionary=True)\n        mycursor.execute(f'SELECT userName, email, personnelId, role FROM users WHERE userId = {userId}')\n        myresult = mycursor.fetchone()\n        if not myresult:\n            return {\n                \"status\": \"error\",\n                \"message\": f\"User {userId} Dont have In database.\",\n        }",
+        "peekOfCode": "def getUserByUserID(conn, userId):\n    try:\n        mycursor = conn.cursor()\n        mycursor.execute(f'SELECT userName, email, personnelId, role FROM users WHERE userId = {userId}')\n        myresult = mycursor.fetchone()\n        if not myresult:\n            return {\n                \"status\": \"error\",\n                \"message\": f\"User {userId} Dont have In database.\",\n        }",
         "detail": "database.users",
         "documentation": {}
     },
@@ -289,7 +281,7 @@
         "kind": 2,
         "importPath": "database.users",
         "description": "database.users",
-        "peekOfCode": "def getUserAll(conn):\n    try:\n        mycursor = conn.cursor(dictionary=True)\n        mycursor.execute(f'SELECT userId, userName, email, personnelId, role FROM users')\n        myresult = mycursor.fetchall()\n        if not myresult:\n            return {\n                \"status\": \"error\",\n                \"message\": \"Dont have Users In Database.\",\n        }",
+        "peekOfCode": "def getUserAll(conn):\n    try:\n        mycursor = conn.cursor()\n        mycursor.execute(f'SELECT userId, userName, email, personnelId, role FROM users')\n        myresult = mycursor.fetchall()\n        if not myresult:\n            return {\n                \"status\": \"error\",\n                \"message\": \"Dont have Users In Database.\",\n        }",
         "detail": "database.users",
         "documentation": {}
     },

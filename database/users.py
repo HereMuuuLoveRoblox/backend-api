@@ -1,3 +1,4 @@
+import sqlite3
 from jose import jwt
 from datetime import datetime, timedelta
 import bcrypt
@@ -19,10 +20,10 @@ def userRegister(conn, data):
         # hash password
         hashed_password = bcrypt.hashpw(data.password.encode('utf-8'), bcrypt.gensalt())
         
-        mycursor = conn.cursor(dictionary=True)
+        mycursor = conn.cursor()
         query = """
             INSERT INTO users (userName, password, email, personnelId)
-            VALUES (%s, %s, %s, %s)
+            VALUES (?, ?, ?, ?)
         """
         values = (
             data.userName,
@@ -44,8 +45,8 @@ def userRegister(conn, data):
 
 def userLogin(conn, data):
     try:
-        mycursor = conn.cursor(dictionary=True)
-        sql = "SELECT userId, password, email, role FROM users WHERE email = %s"
+        mycursor = conn.cursor()
+        sql = "SELECT userId, password, email, role FROM users WHERE email = ?"
         mycursor.execute(sql, (data.email,))
         
         # เช็คว่ามี Email นี้ อยู่จริง
@@ -53,7 +54,7 @@ def userLogin(conn, data):
         
         # เช็คว่า ทีอีเมล และ Password ที่กรอก ตรงกับ Password ใน SQL
         # ก่อนเช็ค ต้อง hash แล้วค่อยเช็ค
-        if user and bcrypt.checkpw(data.password.encode('utf-8'), user['password'].encode('utf-8')):
+        if user and bcrypt.checkpw(data.password.encode('utf-8'), user['password']):
             token = JWTTOKEN.create_access_token({"userId": user['userId'],
                                                   "role": user['role']})
             
@@ -80,7 +81,7 @@ def userLogin(conn, data):
         
 def getUserByUserID(conn, userId):
     try:
-        mycursor = conn.cursor(dictionary=True)
+        mycursor = conn.cursor()
         mycursor.execute(f'SELECT userName, email, personnelId, role FROM users WHERE userId = {userId}')
         myresult = mycursor.fetchone()
         
@@ -99,7 +100,7 @@ def getUserByUserID(conn, userId):
 
 def getUserAll(conn):
     try:
-        mycursor = conn.cursor(dictionary=True)
+        mycursor = conn.cursor()
         mycursor.execute(f'SELECT userId, userName, email, personnelId, role FROM users')
         myresult = mycursor.fetchall()
         
