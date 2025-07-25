@@ -17,10 +17,6 @@ class UserLogin(BaseModel):
     email: str
     password: str
     
-
-# Connect Database
-# conn = connect.ConnectDB()
-
 origins = [
     "http://localhost:3000",   # สำหรับ frontend React/Vue dev
     "https://yourfrontend.com" # สำหรับ production
@@ -88,3 +84,8 @@ async def get_me(user_data: dict = Depends(JWTTOKEN.verify_token), conn=Depends(
     
     except Exception as e:
         return {"Error": str(e)}
+    
+
+@app.get("/checkapi")
+async def health_check():
+    return {"status": "ok", "message": "API is running"}

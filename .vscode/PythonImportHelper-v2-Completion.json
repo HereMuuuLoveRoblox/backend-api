@@ -299,7 +299,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class UserRegister(BaseModel):\n    userName: str\n    password: str\n    confirmPassword: str\n    email: str\n    personnelId: str\nclass UserLogin(BaseModel):\n    email: str\n    password: str\n# Connect Database",
+        "peekOfCode": "class UserRegister(BaseModel):\n    userName: str\n    password: str\n    confirmPassword: str\n    email: str\n    personnelId: str\nclass UserLogin(BaseModel):\n    email: str\n    password: str\norigins = [",
         "detail": "main",
         "documentation": {}
     },
@@ -308,7 +308,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\n# Connect Database\n# conn = connect.ConnectDB()\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()",
+        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()\napp.add_middleware(\n    CORSMiddleware,",
         "detail": "main",
         "documentation": {}
     },
