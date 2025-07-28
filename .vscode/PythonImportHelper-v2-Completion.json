@@ -259,11 +259,20 @@
         "documentation": {}
     },
     {
+        "label": "CheckEmailandPersonnelIdinSQL",
+        "kind": 2,
+        "importPath": "database.users",
+        "description": "database.users",
+        "peekOfCode": "def CheckEmailandPersonnelIdinSQL(conn, data):\n    mycursor = conn.cursor()\n    mycursor.execute(\"SELECT * FROM users WHERE email = ? OR personnelId = ?\", (data.email, data.personnelId))\n    existing_user = mycursor.fetchone()\n    mycursor.close()\n    if existing_user:\n        return {\"status\": \"error\", \"message\": \"Username or Email already exists\"}\n    return None  # ✅ ถ้าไม่ซ้ำ ส่ง None กลับ\n# Register\ndef userRegister(conn, data):",
+        "detail": "database.users",
+        "documentation": {}
+    },
+    {
         "label": "userRegister",
         "kind": 2,
         "importPath": "database.users",
         "description": "database.users",
-        "peekOfCode": "def userRegister(conn, data):\n    try:\n        # Check Password is Match\n        if data.password != data.confirmPassword:\n            return {\"status\": \"error\", \"message\": \"Passwords do not match\"}\n        # Username least 8 characters\n        if len(data.userName) < 8:\n            return {\"status\": \"error\", \"message\": \"Username must be at least 8 characters long\"}\n        # hash password\n        hashed_password = bcrypt.hashpw(data.password.encode('utf-8'), bcrypt.gensalt())",
+        "peekOfCode": "def userRegister(conn, data):\n    try:\n        conflict = CheckEmailandPersonnelIdinSQL(conn, data)\n        if conflict:\n            return conflict  # ถ้ามีปัญหาเรื่องซ้ำก็ return ออกทันที\n        # Check Password is Match\n        if data.password != data.confirmPassword:\n            return {\"status\": \"error\", \"message\": \"Passwords do not match\"}\n        # Username least 8 characters\n        if len(data.userName) < 8:",
         "detail": "database.users",
         "documentation": {}
     },
@@ -308,7 +317,7 @@
         "kind": 6,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()\napp.add_middleware(\n    CORSMiddleware,",
+        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\norigins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"http://localhost:5173\",\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()\napp.add_middleware(",
         "detail": "main",
         "documentation": {}
     },
@@ -317,7 +326,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "origins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,\n    allow_methods=[\"*\"],",
+        "peekOfCode": "origins = [\n    \"http://localhost:3000\",   # สำหรับ frontend React/Vue dev\n    \"http://localhost:5173\",\n    \"https://yourfrontend.com\" # สำหรับ production\n]\napp = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,",
         "detail": "main",
         "documentation": {}
     },
@@ -326,7 +335,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n@app.post(\"/users/register\")\nasync def post_user_register(data: UserRegister, conn=Depends(connect.get_db)):",
+        "peekOfCode": "app = FastAPI()\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n@app.post(\"/users/register\")\nasync def post_user_register(data: UserRegister, conn=Depends(connect.get_db)):",
         "detail": "main",
         "documentation": {}
     }

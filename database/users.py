@@ -6,9 +6,25 @@ import os
 
 from database import token as JWTTOKEN
 
+def CheckEmailandPersonnelIdinSQL(conn, data):
+    mycursor = conn.cursor()
+    mycursor.execute("SELECT * FROM users WHERE email = ? OR personnelId = ?", (data.email, data.personnelId))
+    existing_user = mycursor.fetchone()
+    mycursor.close()
+
+    if existing_user:
+        return {"status": "error", "message": "Username or Email already exists"}
+    
+    return None  # ✅ ถ้าไม่ซ้ำ ส่ง None กลับ
+        
+    
 # Register
 def userRegister(conn, data):
     try:
+        conflict = CheckEmailandPersonnelIdinSQL(conn, data)
+        if conflict:
+            return conflict  # ถ้ามีปัญหาเรื่องซ้ำก็ return ออกทันที
+        
         # Check Password is Match
         if data.password != data.confirmPassword:
             return {"status": "error", "message": "Passwords do not match"}
@@ -16,7 +32,7 @@ def userRegister(conn, data):
         # Username least 8 characters
         if len(data.userName) < 8:
             return {"status": "error", "message": "Username must be at least 8 characters long"}
-
+        
         # hash password
         hashed_password = bcrypt.hashpw(data.password.encode('utf-8'), bcrypt.gensalt())
         

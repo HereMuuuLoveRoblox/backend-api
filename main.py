@@ -19,13 +19,14 @@ class UserLogin(BaseModel):
     
 origins = [
     "http://localhost:3000",   # สำหรับ frontend React/Vue dev
+    "http://localhost:5173",
     "https://yourfrontend.com" # สำหรับ production
 ]
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -58,6 +59,7 @@ async def get_user_all(user_data: dict = Depends(JWTTOKEN.verify_token), conn=De
     try:
         response = MUsers.getUserAll(conn)
         return response
+    
     except Exception as e:
         return {"Error": str(e)}
 
@@ -74,7 +76,6 @@ async def get_user_by_id(userId: int, user_data: dict = Depends(JWTTOKEN.verify_
     except Exception as e:
         return {"Error": str(e)}
 
-
 @app.get("/users/getMe")
 async def get_me(user_data: dict = Depends(JWTTOKEN.verify_token), conn=Depends(connect.get_db)):
     
@@ -85,7 +86,6 @@ async def get_me(user_data: dict = Depends(JWTTOKEN.verify_token), conn=Depends(
     except Exception as e:
         return {"Error": str(e)}
     
-
 @app.get("/checkapi")
 async def health_check():
     return {"status": "ok", "message": "API is running"}
